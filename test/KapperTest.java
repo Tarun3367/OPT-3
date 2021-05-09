@@ -14,13 +14,11 @@ class KapperTest {
 
     @Test
     void berekenPrijs() {
-        assertEquals(10, kapper.berekenPrijs(0), 0.001);
-        assertEquals(10, kapper.berekenPrijs(1), 0.001);
-        assertEquals(10, kapper.berekenPrijs(9), 0.001);
-        assertEquals(15, kapper.berekenPrijs(10), 0.001);
-        assertEquals(15, kapper.berekenPrijs(11), 0.001);
-        assertEquals(15, kapper.berekenPrijs(17), 0.001);
-        assertEquals(17.50, kapper.berekenPrijs(18), 0.001);
-        assertEquals(17.50, kapper.berekenPrijs(19), 0.001);
+        assertEquals(13.50, kapper.berekenPrijs(5, true, true, true), 0.001);
+        assertEquals(10, kapper.berekenPrijs(5, false, false, false), 0.001);
+        assertEquals(15.75, kapper.berekenPrijs(15, true, false, true), 0.001);
+        assertEquals(17.50, kapper.berekenPrijs(15, false, true, false), 0.001);
+        assertEquals(22.50, kapper.berekenPrijs(25, true, true, false), 0.001);
+        assertEquals(15.75, kapper.berekenPrijs(25, false, false, true), 0.001);
     }
 }
