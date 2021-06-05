@@ -1,19 +1,45 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Kapper {
-    public boolean checkOfAfspraakGemaaktKanWorden(boolean nietGesloten, boolean voldoendePlek, boolean geenPauze){
-        return nietGesloten&&voldoendePlek&&geenPauze;
-    }
-    public double berekenPrijs(Integer leeftijd, boolean baard, boolean haarWassen, boolean kortingcode){
-        double prijs=0;
+    private static Kapper kapper;
+    private ArrayList<Afspraak> afspraken=new ArrayList<>();
+    private Integer startPauzeUur=15;
+    boolean gesloten=false;
 
-        if(leeftijd<10){prijs=10;}
-        else if(leeftijd<18){prijs=15;}
-        else{prijs=17.50;}
-
-        if(baard){prijs+=2.50;}
-        if(haarWassen){prijs+=2.50;}
-        if (kortingcode){prijs*=0.9;}
-
-        return prijs;
+    private Kapper(){}
+    public boolean checkOfAfspraakGemaaktKanWorden(Afspraak afspraak){
+        boolean check=checkNietGesloten()&&checkPlek(afspraak.getStartUur())&&checkGeenPauze(afspraak.getStartUur());
+        if(check){afspraken.add(afspraak);}
+        return check;
     }
 
+    public Afspraak getAfspraak(Gebruiker gebruiker){
+        for(Afspraak temp: afspraken){
+            if(gebruiker.getNaam().equals(temp.getGebruiker().getNaam())){
+                return temp;
+            }
+        }
+        return null;
+    }
+
+    private boolean checkPlek(Integer startUur){
+        for(Afspraak temp: afspraken){
+            if(temp.getStartUur()==startUur){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkGeenPauze(Integer startUur){
+        return !(startUur==startPauzeUur);
+    }
+
+    private boolean checkNietGesloten(){return !gesloten;}
+
+    public static Kapper getInstance() {
+        if(kapper==null){kapper=new Kapper();}
+        return kapper;
+    }
 }
